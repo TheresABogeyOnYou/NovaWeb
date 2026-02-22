@@ -1,0 +1,105 @@
+/* ================================= */
+/* GLOBAL MOBILE SAFETY */
+/* ================================= */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+
+/* ================================= */
+/* TABLET + MOBILE */
+/* ================================= */
+
+@media (max-width: 900px) {
+
+    /* NAVBAR */
+    .nav {
+        padding: 15px 20px;
+    }
+
+    nav a {
+        margin-left: 15px;
+        font-size: 14px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        height: auto;
+        gap: 40px;
+        padding: 140px 20px 80px 20px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .hero img {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    /* SECTIONS */
+    section {
+        padding: 80px 20px;
+    }
+
+    h2 {
+        font-size: 32px;
+    }
+
+    /* ABOUT SECTION */
+    .about {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .about img {
+        width: 100%;
+        max-width: 420px;
+    }
+
+    /* CARDS */
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* ================================= */
+/* SMALL PHONES */
+/* ================================= */
+
+@media (max-width: 500px) {
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero button {
+        width: 100%;
+    }
+
+    nav {
+        justify-content: center;
+        gap: 10px;
+    }
+
+}
