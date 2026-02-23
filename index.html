@@ -23,7 +23,8 @@
             overflow-x: hidden;
         }
 
-        /* NAV */
+        /* ================= NAV ================= */
+
         header {
             position: fixed;
             width: 100%;
@@ -36,7 +37,7 @@
         .nav {
             max-width: 1300px;
             margin: auto;
-            padding: 15px 20px;
+            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -45,54 +46,64 @@
 
         nav {
             display: flex;
+            align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
         }
 
         nav a {
+            margin-left: 20px;
             text-decoration: none;
             color: white;
             opacity: .8;
         }
 
+        nav a:hover {
+            opacity: 1;
+        }
+
         .btn {
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 8px;
         }
 
-        /* HERO */
+        /* ================= HERO ================= */
+
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 50px;
+            justify-content: space-between;
             max-width: 1300px;
             margin: auto;
-            padding: 120px 20px 60px;
+            padding: 140px 20px 60px;
+            gap: 40px;
             flex-wrap: wrap;
-            text-align: center;
+        }
+
+        .hero-text {
+            flex: 1;
+            min-width: 280px;
         }
 
         .hero h1 {
-            font-size: clamp(32px, 6vw, 72px);
+            font-size: 60px;
+            line-height: 1.1;
             margin-bottom: 20px;
         }
 
         .hero p {
             color: #aaa;
-            font-size: 18px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
-        .hero button {
-            padding: 14px 24px;
-            border: none;
+        .hero-btn {
+            display: inline-block;
+            padding: 16px 28px;
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
-            color: white;
             border-radius: 10px;
-            cursor: pointer;
+            text-decoration: none;
+            color: white;
         }
 
         .hero img {
@@ -101,9 +112,10 @@
             border-radius: 20px;
         }
 
-        /* SECTIONS */
+        /* ================= SECTIONS ================= */
+
         section {
-            padding: 80px 20px;
+            padding: 100px 20px;
         }
 
         .container {
@@ -112,21 +124,22 @@
         }
 
         h2 {
-            font-size: clamp(28px, 5vw, 42px);
             text-align: center;
             margin-bottom: 40px;
+            font-size: 38px;
         }
 
-        /* CARDS */
+        /* ================= CARDS ================= */
+
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
         }
 
         .card {
             background: rgba(255, 255, 255, .03);
-            padding: 30px;
+            padding: 40px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, .05);
             transform: translateY(60px);
@@ -144,14 +157,7 @@
             font-size: 34px;
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .card ul {
-            list-style: none;
-            margin: 20px 0;
-            color: #aaa;
-            line-height: 2;
+            color: transparent;
         }
 
         .price-btn {
@@ -163,41 +169,51 @@
             cursor: pointer;
         }
 
-        /* ABOUT */
+        /* ================= ABOUT ================= */
+
         .about {
             display: flex;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
             flex-wrap: wrap;
-            justify-content: center;
-            text-align: center;
         }
 
         .about img {
             width: 100%;
-            max-width: 500px;
+            max-width: 450px;
             border-radius: 18px;
         }
 
-        /* FOOTER */
-        footer {
-            text-align: center;
-            padding: 50px 20px;
-            color: #777;
-        }
+        /* ================= MOBILE ================= */
 
-        /* ===== MOBILE FIX ===== */
-        @media(max-width:768px) {
+        @media(max-width:900px) {
 
             .hero {
                 flex-direction: column;
                 text-align: center;
             }
 
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: 10px;
+            }
+
             nav {
                 justify-content: center;
             }
 
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
         }
     </style>
 </head>
@@ -206,6 +222,7 @@
 
     <header>
         <div class="nav">
+
             <h2>NovaWeb</h2>
 
             <nav>
@@ -218,42 +235,62 @@
                     <i class="fa-solid fa-cart-shopping"></i>
                 </a>
 
-                <a href="#contact" class="btn">Get Started</a>
+                <a href="shop.html" class="btn">Get Started</a>
             </nav>
+
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="hero" id="home">
 
-        <div>
+        <div class="hero-text">
             <h1>Elite Websites<br>For Modern Brands</h1>
             <p>We design cinematic, high-performance digital experiences.</p>
-            <button>Start Project</button>
+
+            <a href="shop.html" class="hero-btn">
+                Start Project
+            </a>
+
         </div>
 
         <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1600&auto=format&fit=crop">
 
     </section>
 
-    <section id="services">
+    <!-- PRICING -->
+    <section id="pricing">
         <div class="container">
-            <h2>What We Do</h2>
+
+            <h2>Website Packages</h2>
 
             <div class="cards">
-                <div class="card">
-                    <h3>Web Design</h3>
-                    <p>Luxury-level modern business websites.</p>
-                </div>
-                <div class="card">
-                    <h3>SEO Systems</h3>
-                    <p>Built to rank and convert traffic.</p>
-                </div>
-                <div class="card">
-                    <h3>Performance</h3>
-                    <p>Fast, scalable hosting setups.</p>
-                </div>
-            </div>
 
+                <div class="card">
+                    <h3>Starter</h3>
+                    <h1>£100</h1>
+                    <button class="price-btn" onclick="window.location.href='shop.html?plan=starter'">
+                        Choose Plan
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Professional</h3>
+                    <h1>£300</h1>
+                    <button class="price-btn" onclick="window.location.href='shop.html?plan=professional'">
+                        Choose Plan
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Elite</h3>
+                    <h1>£800</h1>
+                    <button class="price-btn" onclick="window.location.href='shop.html?plan=elite'">
+                        Choose Plan
+                    </button>
+                </div>
+
+            </div>
         </div>
     </section>
 
@@ -262,6 +299,8 @@
     </footer>
 
     <script>
+
+        /* CARD SCROLL ANIMATION */
         const cards = document.querySelectorAll('.card');
 
         const observer = new IntersectionObserver(entries => {
@@ -273,6 +312,7 @@
         });
 
         cards.forEach(card => observer.observe(card));
+
     </script>
 
 </body>

@@ -126,9 +126,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         const plan = urlParams.get('plan') || 'starter';
         const planInfo = {
-            starter: { name: 'Starter', price: '£499' },
-            professional: { name: 'Professional', price: '£999' },
-            elite: { name: 'Elite', price: '£1999' }
+            starter: { name: 'Starter', price: '£100' },
+            professional: { name: 'Professional', price: '£250' },
+            elite: { name: 'Elite', price: '£800' }
         };
         document.getElementById('plan-title').textContent = 'Complete Your Purchase: ' + planInfo[plan].name;
         document.getElementById('plan-price').textContent = 'Price: ' + planInfo[plan].price;
