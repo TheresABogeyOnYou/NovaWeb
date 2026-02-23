@@ -13,6 +13,8 @@
             color: white;
             font-family: 'Inter', sans-serif;
             margin: 0;
+            scroll-behavior: smooth;
+            /* smooth scrolling */
         }
 
         header {
@@ -49,7 +51,8 @@
         .container {
             max-width: 800px;
             margin: auto;
-            padding: 150px 20px 60px 20px;
+            padding: 200px 20px 60px 20px;
+            /* avoid header overlap */
             text-align: center;
         }
 
@@ -77,6 +80,11 @@
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
             color: white;
             cursor: pointer;
+        }
+
+        #payment-message {
+            margin-top: 20px;
+            font-weight: bold;
         }
 
         footer {
@@ -108,11 +116,11 @@
         <form id="payment-form">
             <input type="text" id="name" placeholder="Full Name" required>
             <input type="email" id="email" placeholder="Email" required>
-            <div id="card-element"><!-- Stripe will inject card input --></div>
+            <div id="card-element"><!-- Stripe injects card input here --></div>
             <button type="submit">Pay Now</button>
         </form>
 
-        <div id="payment-message" style="color:#aaa;margin-top:20px"></div>
+        <div id="payment-message"></div>
     </div>
 
     <footer>
@@ -127,16 +135,24 @@
         const plan = urlParams.get('plan') || 'starter';
         const planInfo = {
             starter: { name: 'Starter', price: '£100' },
-            professional: { name: 'Professional', price: '£250' },
+            professional: { name: 'Professional', price: '£300' },
             elite: { name: 'Elite', price: '£800' }
         };
         document.getElementById('plan-title').textContent = 'Complete Your Purchase: ' + planInfo[plan].name;
         document.getElementById('plan-price').textContent = 'Price: ' + planInfo[plan].price;
 
         // 2️⃣ Stripe Elements setup
-        const stripe = Stripe('YOUR_PUBLISHABLE_KEY'); // Replace with your Stripe publishable key
+        const stripe = Stripe('YOUR_PUBLISHABLE_KEY'); // <-- replace with your Stripe key
         const elements = stripe.elements();
-        const card = elements.create('card', { style: { base: { color: "#fff", fontSize: "16px", "::placeholder": { color: "#aaa" } } } });
+        const card = elements.create('card', {
+            style: {
+                base: {
+                    color: "#fff",
+                    fontSize: "16px",
+                    "::placeholder": { color: "#aaa" }
+                }
+            }
+        });
         card.mount('#card-element');
 
         const form = document.getElementById('payment-form');
@@ -145,23 +161,58 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // 3️⃣ Call your server to create PaymentIntent
-            const response = await fetch('/create-payment-intent', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan })
-            });
-            const data = await response.json();
+            try {
+                const response = await fetch('/create-payment-intent', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ plan })
+                });
 
-            // 4️⃣ Confirm card payment
-            const result = await stripe.confirmCardPayment(data.clientSecret, {
-                payment_method: { card: card, billing_details: { name: document.getElementById('name').value, email: document.getElementById('email').value } }
-            });
+                const data = await response.json();
 
-            if (result.error) {
-                message.textContent = result.error.message;
-            } else if (result.paymentIntent.status === 'succeeded') {
-                message.textContent = "Payment successful! Thank you.";
+                const result = await stripe.confirmCardPayment(data.clientSecret, {
+                    payment_method: {
+                        card: card,
+                        billing_details: {
+                            name: document.getElementById('name').value,
+                            email: document.getElementById('email').value
+                        }
+                    }
+                });
+
+                if (result.error) {
+                    message.style.color = 'red';
+                    message.textContent = "Payment failed: " + result.error.message;
+                } else if (result.paymentIntent.status === 'succeeded') {
+                    message.style.color = 'green';
+                    message.textContent = "Payment successful! Thank you.";
+                }
+
+            } catch (err) {
+                message.style.color = 'red';
+                message.textContent = "Error: " + err.message;
+            }
+        });
+
+        // 3️⃣ Fix cross-page hash navigation for index.html
+        const hashLinks = document.querySelectorAll('nav a[href*="#"]');
+        hashLinks.forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                window.location.href = link.getAttribute('href');
+            });
+        });
+
+        // 4️⃣ Smooth scroll on page load if redirected with a hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) {
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                }
             }
         });
     </script>

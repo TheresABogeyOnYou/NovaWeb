@@ -11,7 +11,6 @@
 
     <style>
         /* ================= GLOBAL ================= */
-
         * {
             margin: 0;
             padding: 0;
@@ -27,54 +26,102 @@
             background: #05060a;
             color: white;
             overflow-x: hidden;
+            opacity: 0;
+            transition: .6s;
+            line-height: 1.6;
+            letter-spacing: -0.2px;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 10%, #ffffff05, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* ===== LIQUID BACKGROUND ===== */
+        .bg {
+            position: fixed;
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, #4f7cff30, transparent 60%);
+            filter: blur(160px);
+            top: -300px;
+            right: -300px;
+            z-index: -1;
+            animation: float 18s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-120px, 80px);
+            }
         }
 
         /* ================= NAV ================= */
-
         header {
             position: fixed;
             width: 100%;
             top: 0;
-            background: rgba(5, 6, 10, .7);
             backdrop-filter: blur(20px);
+            background: rgba(5, 6, 10, .6);
+            transition: .4s;
             z-index: 999;
         }
 
         .nav {
             max-width: 1300px;
             margin: auto;
-            padding: 20px;
+            padding: 22px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
         }
 
         nav a {
-            margin-left: 20px;
+            margin-left: 22px;
             text-decoration: none;
             color: white;
-            opacity: .8;
+            opacity: .75;
+            transition: .3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 1px;
+            background: #fff;
+            transition: .3s;
         }
 
         nav a:hover {
             opacity: 1;
         }
 
+        nav a:hover::after {
+            width: 100%;
+        }
+
         .btn {
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: .35s;
         }
 
         /* ================= HERO ================= */
-
         .hero {
             min-height: 100vh;
             display: flex;
@@ -82,45 +129,116 @@
             justify-content: space-between;
             max-width: 1300px;
             margin: auto;
-            padding: 140px 20px 60px;
+            padding: 150px 20px 60px;
             gap: 40px;
             flex-wrap: wrap;
-        }
-
-        .hero-text {
-            flex: 1;
-            min-width: 280px;
+            position: relative;
+            overflow: hidden;
+            /* added for image clamp */
         }
 
         .hero h1 {
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 64px;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -2px;
+            max-width: 650px;
         }
 
         .hero p {
             color: #aaa;
-            margin-bottom: 30px;
+            margin: 25px 0;
+            font-size: 18px;
+            max-width: 520px;
         }
 
         .hero-btn {
-            display: inline-block;
-            padding: 16px 28px;
+            padding: 18px 32px;
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
-            border-radius: 10px;
+            border-radius: 12px;
             text-decoration: none;
             color: white;
+            display: inline-block;
+            transition: .35s;
+            cursor: pointer;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 60px rgba(79, 124, 255, .4);
+            filter: brightness(1.1);
+        }
+
+        .hero-btn:active {
+            transform: scale(.96);
         }
 
         .hero img {
+            max-width: 560px;
             width: 100%;
-            max-width: 550px;
-            border-radius: 20px;
+            border-radius: 24px;
+            box-shadow: 0 60px 120px rgba(0, 0, 0, .7);
+            transition: .5s;
+            will-change: transform;
+            /* GPU optimization */
+        }
+
+        /* ================= BRAND LOGOS ================= */
+        #brands {
+            padding: 40px 20px 80px;
+            overflow: hidden;
+            /* hide outside scrolling logos */
+        }
+
+        #brands .logo-wrapper {
+            display: flex;
+            gap: 50px;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            width: max-content;
+            /* full width for scrolling */
+            animation: scrollBrands 40s linear infinite;
+        }
+
+        #brands .logo-wrapper img {
+            flex-shrink: 0;
+            height: 40px;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        #brands .logo-wrapper img:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        @keyframes scrollBrands {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
         }
 
         /* ================= SECTIONS ================= */
-
         section {
-            padding: 100px 20px;
+            padding: 110px 20px;
+            opacity: 0;
+            transform: translateY(60px);
+            transition: 1.2s;
+            border-top: 1px solid rgba(255, 255, 255, .04);
+            position: relative;
+            overflow: hidden;
+            /* clip images */
+        }
+
+        section.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .container {
@@ -130,257 +248,263 @@
 
         h2 {
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 38px;
+            font-size: 40px;
+            margin-bottom: 50px;
+            font-weight: 600;
+            letter-spacing: -1px;
         }
 
         /* ================= CARDS ================= */
-
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            gap: 35px;
         }
 
         .card {
             background: rgba(255, 255, 255, .03);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, .05);
-            transform: translateY(60px);
+            padding: 55px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, .08);
+            transition: .5s;
             opacity: 0;
-            transition: 1s;
+            transform: translateY(70px);
+            position: relative;
+            overflow: hidden;
         }
 
-        .card.show {
-            transform: translateY(0);
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .05), transparent);
+            opacity: 0;
+            transition: .5s;
+        }
+
+        .card:hover::before {
             opacity: 1;
         }
 
-        .card p {
-            color: #aaa;
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .card h1 {
-            margin: 15px 0;
-            font-size: 34px;
-            background: linear-gradient(90deg, #4f7cff, #7b5cff);
-            -webkit-background-clip: text;
-            color: transparent;
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .7), 0 0 40px rgba(79, 124, 255, .2);
         }
 
         .price-btn {
-            padding: 12px 22px;
+            padding: 14px 24px;
+            border-radius: 10px;
             border: none;
-            border-radius: 8px;
+            cursor: pointer;
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
             color: white;
-            cursor: pointer;
+            transition: .35s;
+        }
+
+        .price-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(79, 124, 255, .35);
+        }
+
+        .price-btn:active {
+            transform: scale(.96);
         }
 
         /* ================= ABOUT ================= */
-
         .about {
             display: flex;
-            align-items: center;
-            gap: 50px;
+            gap: 60px;
             flex-wrap: wrap;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
 
         .about img {
-            width: 100%;
             max-width: 450px;
-            border-radius: 18px;
+            width: 100%;
+            border-radius: 20px;
+            will-change: transform;
         }
 
         /* ================= MOBILE ================= */
-
         @media(max-width:900px) {
-
             .hero {
                 flex-direction: column;
                 text-align: center;
             }
 
             .hero h1 {
-                font-size: 38px;
+                font-size: 40px;
             }
 
-            .nav {
-                flex-direction: column;
-                gap: 10px;
+            .hero img,
+            .about img {
+                transform: translateY(0);
             }
-
-            nav {
-                justify-content: center;
-            }
-
         }
 
         /* ================= FOOTER ================= */
-
         footer {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: #777;
         }
+
+        /* HERO NAV FIX */
+        @media(min-width:900px) {
+            .hero {
+                padding-top: calc(150px + 80px);
+            }
+        }
+
+        /* header height */
     </style>
 </head>
 
 <body>
 
+    <div class="bg"></div>
+
     <header>
         <div class="nav">
-
             <h2>NovaWeb</h2>
-
             <nav>
                 <a href="#home">Home</a>
                 <a href="#services">Services</a>
                 <a href="#about">About</a>
                 <a href="#pricing">Pricing</a>
-
-                <a href="shop.html">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-
-                <a href="shop.html" class="btn">Get Started</a>
+                <a href="shop.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="shop.html" class="btn magnetic">Get Started</a>
             </nav>
-
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="hero" id="home">
-
         <div class="hero-text">
             <h1>Elite Websites<br>For Modern Brands</h1>
-            <p>We design cinematic, high-performance digital experiences.</p>
-
-            <a href="shop.html" class="hero-btn">
-                Start Project
-            </a>
-
+            <p>Cinematic digital experiences engineered for growth.</p>
+            <a href="shop.html" class="hero-btn magnetic">Start Project</a>
         </div>
-
-        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1600&auto=format&fit=crop">
-
+        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1600">
     </section>
 
+    <!-- BRANDS -->
+    <section id="brands">
+        <div class="logo-wrapper">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Amazon_logo.svg" alt="Amazon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Microsoft_logo_%282012%29.svg"
+                alt="Microsoft">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Slack_Technologies_Logo_2019.png" alt="Slack">
+            <!-- duplicate logos for seamless scroll -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Amazon_logo.svg" alt="Amazon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Microsoft_logo_%282012%29.svg"
+                alt="Microsoft">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Slack_Technologies_Logo_2019.png" alt="Slack">
+        </div>
+    </section>
+
+    <!-- SERVICES -->
     <section id="services">
         <div class="container">
-
             <h2>What We Do</h2>
-
             <div class="cards">
                 <div class="card">
                     <h3>Web Design</h3>
-                    <p>Luxury-level modern business websites.</p>
+                    <p>Luxury modern sites.</p>
                 </div>
-
                 <div class="card">
                     <h3>SEO Systems</h3>
-                    <p>Built to rank and convert traffic.</p>
+                    <p>Built to convert.</p>
                 </div>
-
                 <div class="card">
                     <h3>Performance</h3>
-                    <p>Fast scalable hosting setups.</p>
+                    <p>Lightning fast hosting.</p>
                 </div>
             </div>
-
         </div>
     </section>
 
+    <!-- PRICING -->
     <section id="pricing">
         <div class="container">
-
             <h2>Website Packages</h2>
-
             <div class="cards">
-
                 <div class="card">
                     <h3>Starter</h3>
-                    <h1>£100</h1>
-                    <button class="price-btn" onclick="window.location.href='shop.html?plan=starter'">
-                        Choose Plan
-                    </button>
+                    <h1>£100</h1><button class="price-btn"
+                        onclick="window.location.href='shop.html?plan=starter'">Choose Plan</button>
                 </div>
-
                 <div class="card">
                     <h3>Professional</h3>
-                    <h1>£300</h1>
-                    <button class="price-btn" onclick="window.location.href='shop.html?plan=professional'">
-                        Choose Plan
-                    </button>
+                    <h1>£300</h1><button class="price-btn"
+                        onclick="window.location.href='shop.html?plan=professional'">Choose Plan</button>
                 </div>
-
                 <div class="card">
                     <h3>Elite</h3>
-                    <h1>£800</h1>
-                    <button class="price-btn" onclick="window.location.href='shop.html?plan=elite'">
-                        Choose Plan
-                    </button>
+                    <h1>£800</h1><button class="price-btn" onclick="window.location.href='shop.html?plan=elite'">Choose
+                        Plan</button>
                 </div>
-
             </div>
-
         </div>
     </section>
 
+    <!-- ABOUT -->
     <section id="about">
         <div class="container about">
-
-            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1600&auto=format&fit=crop">
-
+            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1600">
             <div>
                 <h2>About NovaWeb</h2>
                 <p style="color:#aaa;font-size:18px;line-height:1.7">
-                    NovaWeb builds premium digital experiences inspired by elite
-                    creative agencies focused on performance and conversion.
+                    Premium digital experiences inspired by elite agencies.
                 </p>
             </div>
-
         </div>
     </section>
 
-    <footer>
-        © 2026 NovaWeb — Built for performance
-    </footer>
-
-    <!-- ================= SCRIPT ================= -->
+    <footer>© 2026 NovaWeb — Built for performance</footer>
 
     <script>
+        /* PAGE FADE */
+        window.addEventListener("load", () => { document.body.style.opacity = 1; });
 
-        /* CARD ANIMATION */
-        const cards = document.querySelectorAll('.card');
+        /* REVEAL */
+        const obs = new IntersectionObserver(e => { e.forEach(x => { if (x.isIntersecting) x.target.classList.add("show"); }); }, { threshold: .08 });
+        document.querySelectorAll(".card,section").forEach(el => obs.observe(el));
 
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                }
-            });
-        });
+        /* NAV FIX */
+        document.querySelectorAll('a[href^="#"]').forEach(link => { link.addEventListener("click", function (e) { const home = location.pathname.endsWith("index.html") || location.pathname == "/"; if (!home) { e.preventDefault(); location.href = "index.html" + this.getAttribute("href"); } }); });
 
-        cards.forEach(card => observer.observe(card));
+        /* NAV GLASS */
+        const header = document.querySelector("header");
+        window.addEventListener("scroll", () => { header.style.background = scrollY > 60 ? "rgba(5,6,10,.9)" : "rgba(5,6,10,.6)"; }, { passive: true });
 
-        /* ✅ NAVIGATION FIX */
-        document.querySelectorAll('a[href^="#"]').forEach(link => {
-            link.addEventListener("click", function (e) {
+        /* HERO & ABOUT PARALLAX */
+        const heroImg = document.querySelector(".hero img");
+        const aboutImg = document.querySelector(".about img");
+        window.addEventListener("scroll", () => {
+            const isMobile = window.innerWidth <= 900;
+            if (heroImg) { const r = heroImg.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < window.innerHeight) { const speed = isMobile ? .04 : .12; heroImg.style.transform = `translateY(${Math.min(r.top * speed, 60)}px)`; } }
+            if (aboutImg) { const r = aboutImg.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < window.innerHeight) { const speed = isMobile ? .03 : .12; aboutImg.style.transform = `translateY(${Math.min(r.top * speed, 50)}px)`; } }
+        }, { passive: true });
 
-                const isHome =
-                    window.location.pathname.endsWith("index.html") ||
-                    window.location.pathname === "/" ||
-                    window.location.pathname === "";
+        /* MAGNETIC BUTTONS */
+        document.querySelectorAll(".magnetic").forEach(btn => { btn.addEventListener("mousemove", e => { const r = btn.getBoundingClientRect(); btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) / 6}px, ${(e.clientY - r.top - r.height / 2) / 6}px)` }); btn.addEventListener("mouseleave", () => btn.style.transform = "translate(0)"); });
 
-                if (!isHome) {
-                    e.preventDefault();
-                    window.location.href = "index.html" + this.getAttribute("href");
-                }
-
-            });
-        });
-
+        /* STAGGER */
+        document.querySelectorAll(".card").forEach((c, i) => { c.style.transitionDelay = `${i * 80}ms` });
     </script>
 
 </body>
