@@ -229,8 +229,6 @@
 
 <body>
 
-    <!-- ================= NAV ================= -->
-
     <header>
         <div class="nav">
 
@@ -252,8 +250,6 @@
         </div>
     </header>
 
-    <!-- ================= HERO ================= -->
-
     <section class="hero" id="home">
 
         <div class="hero-text">
@@ -270,15 +266,12 @@
 
     </section>
 
-    <!-- ================= SERVICES ================= -->
-
     <section id="services">
         <div class="container">
 
             <h2>What We Do</h2>
 
             <div class="cards">
-
                 <div class="card">
                     <h3>Web Design</h3>
                     <p>Luxury-level modern business websites.</p>
@@ -293,13 +286,10 @@
                     <h3>Performance</h3>
                     <p>Fast scalable hosting setups.</p>
                 </div>
-
             </div>
 
         </div>
     </section>
-
-    <!-- ================= PRICING ================= -->
 
     <section id="pricing">
         <div class="container">
@@ -337,8 +327,6 @@
         </div>
     </section>
 
-    <!-- ================= ABOUT ================= -->
-
     <section id="about">
         <div class="container about">
 
@@ -355,8 +343,6 @@
         </div>
     </section>
 
-    <!-- ================= FOOTER ================= -->
-
     <footer>
         © 2026 NovaWeb — Built for performance
     </footer>
@@ -365,6 +351,7 @@
 
     <script>
 
+        /* CARD ANIMATION */
         const cards = document.querySelectorAll('.card');
 
         const observer = new IntersectionObserver(entries => {
@@ -376,6 +363,23 @@
         });
 
         cards.forEach(card => observer.observe(card));
+
+        /* ✅ NAVIGATION FIX */
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener("click", function (e) {
+
+                const isHome =
+                    window.location.pathname.endsWith("index.html") ||
+                    window.location.pathname === "/" ||
+                    window.location.pathname === "";
+
+                if (!isHome) {
+                    e.preventDefault();
+                    window.location.href = "index.html" + this.getAttribute("href");
+                }
+
+            });
+        });
 
     </script>
 
