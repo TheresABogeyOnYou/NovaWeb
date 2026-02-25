@@ -6,6 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NovaWeb</title>
 
+    <!-- SEO / Social -->
+    <meta name="description"
+        content="NovaWeb builds elite, cinematic websites engineered for growth — design, SEO systems, and performance for modern brands.">
+    <meta property="og:title" content="NovaWeb — Elite Websites For Modern Brands">
+    <meta property="og:description" content="Cinematic digital experiences engineered for growth.">
+    <meta property="og:type" content="website">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -83,16 +90,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
+        }
+
+        /* FIX: gap-based nav (no margin-left wrap chaos) */
+        .nav nav {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         nav a {
-            margin-left: 22px;
+            margin-left: 0;
             text-decoration: none;
             color: white;
             opacity: .75;
             transition: .3s;
             position: relative;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         nav a::after {
@@ -111,6 +129,14 @@
         }
 
         nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            opacity: 1;
+        }
+
+        nav a.active::after {
             width: 100%;
         }
 
@@ -134,6 +160,9 @@
             flex-wrap: wrap;
             position: relative;
             overflow: hidden;
+            opacity: 1;
+            transform: none;
+            border-top: none;
         }
 
         .hero h1 {
@@ -160,6 +189,7 @@
             display: inline-block;
             transition: .35s;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .hero-btn:hover {
@@ -181,10 +211,13 @@
             will-change: transform;
         }
 
-        /* ================= BRAND LOGOS ================= */
+        /* ================= BRAND LOGOS (FIXED: use icons, not broken external images) ================= */
         #brands {
             padding: 40px 20px 80px;
             overflow: hidden;
+            opacity: 1 !important;
+            transform: none !important;
+            border-top: none !important;
         }
 
         #brands .logo-wrapper {
@@ -194,20 +227,22 @@
             justify-content: flex-start;
             width: max-content;
             animation: scrollBrands 40s linear infinite;
+            align-items: center;
         }
 
-        #brands .logo-wrapper img {
+        .brand {
             flex-shrink: 0;
-            height: 40px;
+            font-size: 34px;
+            opacity: .55;
             filter: grayscale(100%);
-            opacity: 0.6;
-            transition: 0.3s;
+            transition: .3s;
+            color: #fff;
         }
 
-        #brands .logo-wrapper img:hover {
-            filter: grayscale(0%);
+        .brand:hover {
             opacity: 1;
-            transform: scale(1.1);
+            filter: grayscale(0%);
+            transform: scale(1.08);
         }
 
         @keyframes scrollBrands {
@@ -249,6 +284,15 @@
             letter-spacing: -1px;
         }
 
+        .sub {
+            text-align: center;
+            color: #aaa;
+            font-size: 16px;
+            max-width: 820px;
+            margin: -30px auto 50px;
+            line-height: 1.8;
+        }
+
         /* ================= CARDS ================= */
         .cards {
             display: grid;
@@ -256,6 +300,7 @@
             gap: 35px;
         }
 
+        /* ✅ FIXED CARD STACKING (so pricing buttons stay clickable) */
         .card {
             background: rgba(255, 255, 255, .03);
             padding: 55px;
@@ -266,6 +311,7 @@
             transform: translateY(70px);
             position: relative;
             overflow: hidden;
+            isolation: isolate;
         }
 
         .card::before {
@@ -275,6 +321,13 @@
             background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .05), transparent);
             opacity: 0;
             transition: .5s;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .card>* {
+            position: relative;
+            z-index: 1;
         }
 
         .card:hover::before {
@@ -291,7 +344,16 @@
             box-shadow: 0 30px 80px rgba(0, 0, 0, .7), 0 0 40px rgba(79, 124, 255, .2);
         }
 
+        /* ✅ NEW: make a whole work card clickable without changing its look */
+        .work-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* FIX: price buttons become anchors (always redirect) */
         .price-btn {
+            display: inline-block;
             padding: 14px 24px;
             border-radius: 10px;
             border: none;
@@ -299,6 +361,10 @@
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
             color: white;
             transition: .35s;
+            margin-top: 18px;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
         }
 
         .price-btn:hover {
@@ -327,6 +393,178 @@
             will-change: transform;
         }
 
+        /* ================= NEW: WORK / CASE STUDY / PROCESS / RESULTS / CONTACT ================= */
+        .work-grid .card {
+            padding: 0;
+        }
+
+        .work-shot {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: .95;
+        }
+
+        .work-body {
+            padding: 26px 26px 30px;
+        }
+
+        .tag-row {
+            margin-top: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            font-size: 12px;
+            color: #ddd;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            padding: 7px 10px;
+            border-radius: 999px;
+            opacity: .9;
+        }
+
+        .case {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .case img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 50px 110px rgba(0, 0, 0, .65);
+            will-change: transform;
+        }
+
+        .case h3 {
+            font-size: 30px;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .case p {
+            color: #aaa;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .bullets {
+            margin-top: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .bullets li {
+            color: #aaa;
+            margin-left: 18px;
+            line-height: 1.8;
+        }
+
+        .kpi {
+            font-size: 13px;
+            color: #cfcfcf;
+            opacity: .8;
+            margin-top: 8px;
+        }
+
+        .results .review {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stars {
+            letter-spacing: 1px;
+            color: #ffd36a;
+            font-size: 14px;
+        }
+
+        .review p {
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        .form {
+            max-width: 820px;
+            margin: 0 auto;
+            display: grid;
+            gap: 16px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 16px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .03);
+            color: #fff;
+            outline: none;
+            transition: .3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: rgba(79, 124, 255, .55);
+            box-shadow: 0 0 0 6px rgba(79, 124, 255, .12);
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .submit {
+            padding: 16px 20px;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(90deg, #4f7cff, #7b5cff);
+            color: #fff;
+            font-weight: 700;
+            transition: .35s;
+        }
+
+        .submit:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(79, 124, 255, .35);
+        }
+
+        .submit:active {
+            transform: scale(.98);
+        }
+
+        /* ===== NAV TIGHTENING FOR SMALLER LAPTOPS (fix “jumbled” button) ===== */
+        @media(max-width:1100px) {
+            .nav {
+                padding: 18px;
+            }
+
+            .nav nav {
+                gap: 14px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 9px 14px;
+            }
+        }
+
         /* ================= MOBILE ================= */
         @media(max-width:900px) {
             .hero {
@@ -341,6 +579,14 @@
             .hero img,
             .about img {
                 transform: translateY(0);
+            }
+
+            .case {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -357,13 +603,10 @@
                 padding-top: calc(150px + 80px);
             }
         }
-
-        /* header height */
     </style>
 </head>
 
 <body>
-
     <div class="bg"></div>
 
     <header>
@@ -372,8 +615,11 @@
             <nav>
                 <a href="#home">Home</a>
                 <a href="#services">Services</a>
-                <a href="#about">About</a>
+                <a href="#work">Work</a>
+                <a href="#process">Process</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
                 <a href="shop.html"><i class="fa-solid fa-cart-shopping"></i></a>
                 <a href="shop.html" class="btn magnetic">Get Started</a>
             </nav>
@@ -385,29 +631,29 @@
         <div class="hero-text">
             <h1>Elite Websites<br>For Modern Brands</h1>
             <p>Cinematic digital experiences engineered for growth.</p>
-            <a href="shop.html" class="hero-btn magnetic">Start Project</a>
+            <a href="#contact" class="hero-btn magnetic">Start Project</a>
         </div>
-        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1600">
+        <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1600"
+            alt="Premium website design workspace">
     </section>
 
-    <!-- BRANDS -->
+    <!-- BRANDS (icons so none break) -->
     <section id="brands">
         <div class="logo-wrapper">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Amazon_logo.svg" alt="Amazon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Microsoft_logo_%282012%29.svg"
-                alt="Microsoft">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Slack_Technologies_Logo_2019.png" alt="Slack">
-            <!-- duplicate logos for seamless scroll -->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Amazon_logo.svg" alt="Amazon">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Microsoft_logo_%282012%29.svg"
-                alt="Microsoft">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Slack_Technologies_Logo_2019.png" alt="Slack">
+            <i class="fa-brands fa-apple brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-google brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-amazon brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-microsoft brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-stripe brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-slack brand" aria-hidden="true"></i>
+
+            <!-- duplicates for seamless scroll -->
+            <i class="fa-brands fa-apple brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-google brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-amazon brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-microsoft brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-stripe brand" aria-hidden="true"></i>
+            <i class="fa-brands fa-slack brand" aria-hidden="true"></i>
         </div>
     </section>
 
@@ -415,18 +661,119 @@
     <section id="services">
         <div class="container">
             <h2>What We Do</h2>
+            <p class="sub">A complete website system — cinematic design, conversion structure, SEO foundations, and
+                performance.</p>
+
             <div class="cards">
                 <div class="card">
                     <h3>Web Design</h3>
-                    <p>Luxury modern sites.</p>
+                    <p style="color:#aaa;margin-top:12px;">Luxury modern sites built to feel premium and convert.</p>
+                    <div class="kpi">UX • Visual systems • Brand polish</div>
                 </div>
                 <div class="card">
                     <h3>SEO Systems</h3>
-                    <p>Built to convert.</p>
+                    <p style="color:#aaa;margin-top:12px;">Structure that targets intent and turns traffic into
+                        enquiries.
+                    </p>
+                    <div class="kpi">Local SEO • Pages • On-site optimisation</div>
                 </div>
                 <div class="card">
                     <h3>Performance</h3>
-                    <p>Lightning fast hosting.</p>
+                    <p style="color:#aaa;margin-top:12px;">Fast, clean builds that load instantly and feel sharp.</p>
+                    <div class="kpi">Core Web Vitals • Speed • Stability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK / PORTFOLIO -->
+    <section id="work">
+        <div class="container">
+            <h2>Selected Work</h2>
+            <p class="sub">Top agencies win with proof. Replace placeholders with real client builds.</p>
+
+            <div class="cards work-grid">
+
+                <!-- ✅ NEW: This entire card links to NovaShine.html -->
+                <a class="work-link" href="./NovaShine.html">
+                    <div class="card">
+                        <img class="work-shot"
+                            src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=1600"
+                            alt="Nova Shine example website">
+                        <div class="work-body">
+                            <h3>Nova Shine (Example Site)</h3>
+                            <p style="color:#aaa;margin-top:10px;">Click to view the live example website.</p>
+                            <div class="tag-row">
+                                <span class="tag">Example</span><span class="tag">High-ticket</span><span
+                                    class="tag">Detailing</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="card">
+                    <img class="work-shot" src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?q=80&w=1600"
+                        alt="Portfolio project placeholder">
+                    <div class="work-body">
+                        <h3>Brand + Website Refresh</h3>
+                        <p style="color:#aaa;margin-top:10px;">Modern redesign with clearer offer and premium visual
+                            hierarchy.</p>
+                        <div class="tag-row">
+                            <span class="tag">Redesign</span><span class="tag">Branding</span><span
+                                class="tag">UI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img class="work-shot" src="https://images.unsplash.com/photo-1556155092-8707de31f9c4?q=80&w=1600"
+                        alt="Portfolio project placeholder">
+                    <div class="work-body">
+                        <h3>High-Ticket Service Site</h3>
+                        <p style="color:#aaa;margin-top:10px;">Authority layout with process, proof, and strong CTAs.
+                        </p>
+                        <div class="tag-row">
+                            <span class="tag">High-ticket</span><span class="tag">Authority</span><span
+                                class="tag">Leads</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="process">
+        <div class="container">
+            <h2>Our Process</h2>
+            <p class="sub">This is what top agencies do: reduce uncertainty with a clear, premium process.</p>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>1) Discovery</h3>
+                    <p style="color:#aaa;margin-top:10px;">Goals, audience, competitors, offer clarity, conversion
+                        targets.</p>
+                    <div class="kpi">Strategy • Messaging • Structure</div>
+                </div>
+                <div class="card">
+                    <h3>2) Design</h3>
+                    <p style="color:#aaa;margin-top:10px;">Cinematic layout, modern UI, and hierarchy built to convert.
+                    </p>
+                    <div class="kpi">UI • UX • Brand polish</div>
+                </div>
+                <div class="card">
+                    <h3>3) Build</h3>
+                    <p style="color:#aaa;margin-top:10px;">Fast, clean code — responsive, smooth, and performance
+                        focused.</p>
+                    <div class="kpi">Speed • Mobile • Reliability</div>
+                </div>
+                <div class="card">
+                    <h3>4) Launch</h3>
+                    <p style="color:#aaa;margin-top:10px;">Deployment, QA, analytics hook-up (optional), and handover.
+                    </p>
+                    <div class="kpi">Live • Tested • Ready to scale</div>
                 </div>
             </div>
         </div>
@@ -436,21 +783,43 @@
     <section id="pricing">
         <div class="container">
             <h2>Website Packages</h2>
+            <p class="sub">Choose a plan, and you’ll be taken to checkout instantly.</p>
+
             <div class="cards">
                 <div class="card">
                     <h3>Starter</h3>
-                    <h1>£100</h1><button class="price-btn"
-                        onclick="window.location.href='shop.html?plan=starter'">Choose Plan</button>
+                    <h1 style="margin:14px 0;">£100</h1>
+                    <p style="color:#aaa;">Single-page launch, clean visuals, fast delivery.</p>
+                    <ul class="bullets">
+                        <li>One-page website</li>
+                        <li>Mobile responsive</li>
+                        <li>Basic on-page SEO</li>
+                    </ul>
+                    <a class="price-btn" href="./shop.html?plan=starter" data-plan="starter">Choose Plan</a>
                 </div>
+
                 <div class="card">
                     <h3>Professional</h3>
-                    <h1>£300</h1><button class="price-btn"
-                        onclick="window.location.href='shop.html?plan=professional'">Choose Plan</button>
+                    <h1 style="margin:14px 0;">£300</h1>
+                    <p style="color:#aaa;">Stronger structure + proof blocks + higher conversion focus.</p>
+                    <ul class="bullets">
+                        <li>Multi-section conversion layout</li>
+                        <li>Portfolio / proof blocks</li>
+                        <li>Improved performance</li>
+                    </ul>
+                    <a class="price-btn" href="./shop.html?plan=professional" data-plan="professional">Choose Plan</a>
                 </div>
+
                 <div class="card">
                     <h3>Elite</h3>
-                    <h1>£800</h1><button class="price-btn" onclick="window.location.href='shop.html?plan=elite'">Choose
-                        Plan</button>
+                    <h1 style="margin:14px 0;">£800</h1>
+                    <p style="color:#aaa;">Premium build for brands that want agency-level output.</p>
+                    <ul class="bullets">
+                        <li>Full funnel build</li>
+                        <li>SEO-ready structure</li>
+                        <li>Advanced animations / polish</li>
+                    </ul>
+                    <a class="price-btn" href="./shop.html?plan=elite" data-plan="elite">Choose Plan</a>
                 </div>
             </div>
         </div>
@@ -459,13 +828,70 @@
     <!-- ABOUT -->
     <section id="about">
         <div class="container about">
-            <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1600">
+            <img class="about-img" src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1600"
+                alt="Team working on design and strategy">
             <div>
-                <h2>About NovaWeb</h2>
+                <h2 style="text-align:left;margin-bottom:18px;">About NovaWeb</h2>
+
                 <p style="color:#aaa;font-size:18px;line-height:1.7">
-                    Premium digital experiences inspired by elite agencies.
+                    NovaWeb builds premium websites that look expensive and perform like a sales system.
+                    We focus on cinematic design, conversion-led structure, and performance-first code.
                 </p>
+
+                <p style="color:#aaa;font-size:18px;line-height:1.7;margin-top:14px">
+                    We take on limited projects to keep quality high — if you want templates and shortcuts, we’re not
+                    the right fit.
+                    If you want a premium site that positions you properly, you are.
+                </p>
+
+                <div style="margin-top:22px;">
+                    <a href="#contact" class="hero-btn magnetic" style="padding:14px 22px;">Start Project</a>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- CONTACT (changed to “any doubts”) -->
+    <section id="contact">
+        <div class="container">
+            <h2>Any Questions?</h2>
+            <p class="sub">If you’re unsure which plan you need, or you’ve got any doubts, send a message — we’ll help
+                you choose the best option.</p>
+
+            <form class="form" id="leadForm">
+                <div class="form-grid">
+                    <input type="text" name="name" placeholder="Full Name" required>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+
+                <div class="form-grid">
+                    <select name="service" required>
+                        <option value="" disabled selected>What do you need?</option>
+                        <option>Website Design</option>
+                        <option>Website + SEO</option>
+                        <option>Redesign / Refresh</option>
+                        <option>E-commerce</option>
+                        <option>Not sure yet</option>
+                    </select>
+
+                    <select name="budget" required>
+                        <option value="" disabled selected>Budget Range</option>
+                        <option>£100–£300</option>
+                        <option>£300–£800</option>
+                        <option>£800+</option>
+                        <option>Not sure</option>
+                    </select>
+                </div>
+
+                <textarea name="details"
+                    placeholder="Tell us your business + what you’re trying to achieve. We’ll reply with advice + next steps."></textarea>
+
+                <button class="submit" type="submit">Send Message</button>
+
+                <p style="color:#777;text-align:center;margin-top:10px;font-size:13px;">
+                    Reply time: usually within 24 hours.
+                </p>
+            </form>
         </div>
     </section>
 
@@ -473,35 +899,124 @@
 
     <script>
         /* PAGE FADE */
-        window.addEventListener("load", () => { document.body.style.opacity = 1; });
+        window.addEventListener("load", () => {
+            document.body.style.opacity = 1;
+        });
 
-        /* REVEAL */
-        const obs = new IntersectionObserver(e => { e.forEach(x => { if (x.isIntersecting) x.target.classList.add("show"); }); }, { threshold: .08 });
-        document.querySelectorAll(".card,section").forEach(el => obs.observe(el));
+        /* REVEAL (sections + cards) */
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((x) => {
+                    if (x.isIntersecting) x.target.classList.add("show");
+                });
+            },
+            { threshold: 0.08 }
+        );
+        document.querySelectorAll(".card, section").forEach((el) => obs.observe(el));
 
-        /* NAV FIX */
-        document.querySelectorAll('a[href^="#"]').forEach(link => { link.addEventListener("click", function (e) { const home = location.pathname.endsWith("index.html") || location.pathname == "/"; if (!home) { e.preventDefault(); location.href = "index.html" + this.getAttribute("href"); } }); });
+        /* NAV FIX (keeps your original behaviour) */
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+            link.addEventListener("click", function (e) {
+                const home = location.pathname.endsWith("index.html") || location.pathname == "/";
+                if (!home) {
+                    e.preventDefault();
+                    location.href = "index.html" + this.getAttribute("href");
+                }
+            });
+        });
 
         /* NAV GLASS */
         const header = document.querySelector("header");
-        window.addEventListener("scroll", () => { header.style.background = scrollY > 60 ? "rgba(5,6,10,.9)" : "rgba(5,6,10,.6)"; }, { passive: true });
+        window.addEventListener(
+            "scroll",
+            () => {
+                header.style.background = scrollY > 60 ? "rgba(5,6,10,.9)" : "rgba(5,6,10,.6)";
+            },
+            { passive: true }
+        );
 
         /* HERO & ABOUT PARALLAX */
         const heroImg = document.querySelector(".hero img");
         const aboutImg = document.querySelector(".about img");
-        window.addEventListener("scroll", () => {
-            const isMobile = window.innerWidth <= 900;
-            if (heroImg) { const r = heroImg.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < window.innerHeight) { const speed = isMobile ? .04 : .12; heroImg.style.transform = `translateY(${Math.min(r.top * speed, 60)}px)`; } }
-            if (aboutImg) { const r = aboutImg.parentElement.getBoundingClientRect(); if (r.bottom > 0 && r.top < window.innerHeight) { const speed = isMobile ? .03 : .12; aboutImg.style.transform = `translateY(${Math.min(r.top * speed, 50)}px)`; } }
-        }, { passive: true });
+
+        window.addEventListener(
+            "scroll",
+            () => {
+                const isMobile = window.innerWidth <= 900;
+
+                if (heroImg) {
+                    const r = heroImg.parentElement.getBoundingClientRect();
+                    if (r.bottom > 0 && r.top < window.innerHeight) {
+                        const speed = isMobile ? 0.04 : 0.12;
+                        heroImg.style.transform = `translateY(${Math.min(r.top * speed, 60)}px)`;
+                    }
+                }
+
+                if (aboutImg) {
+                    const r = aboutImg.parentElement.getBoundingClientRect();
+                    if (r.bottom > 0 && r.top < window.innerHeight) {
+                        const speed = isMobile ? 0.03 : 0.12;
+                        aboutImg.style.transform = `translateY(${Math.min(r.top * speed, 50)}px)`;
+                    }
+                }
+            },
+            { passive: true }
+        );
 
         /* MAGNETIC BUTTONS */
-        document.querySelectorAll(".magnetic").forEach(btn => { btn.addEventListener("mousemove", e => { const r = btn.getBoundingClientRect(); btn.style.transform = `translate(${(e.clientX - r.left - r.width / 2) / 6}px, ${(e.clientY - r.top - r.height / 2) / 6}px)` }); btn.addEventListener("mouseleave", () => btn.style.transform = "translate(0)"); });
+        document.querySelectorAll(".magnetic").forEach((btn) => {
+            btn.addEventListener("mousemove", (e) => {
+                const r = btn.getBoundingClientRect();
+                const x = (e.clientX - r.left - r.width / 2) / 6;
+                const y = (e.clientY - r.top - r.height / 2) / 6;
+                btn.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            btn.addEventListener("mouseleave", () => (btn.style.transform = "translate(0)"));
+        });
 
         /* STAGGER */
-        document.querySelectorAll(".card").forEach((c, i) => { c.style.transitionDelay = `${i * 80}ms` });
-    </script>
+        document.querySelectorAll(".card").forEach((c, i) => {
+            c.style.transitionDelay = `${i * 80}ms`;
+        });
 
+        /* ACTIVE NAV HIGHLIGHT */
+        const navLinks = document.querySelectorAll("header nav a[href^='#']");
+        const sections = Array.from(document.querySelectorAll("section[id]"));
+        window.addEventListener(
+            "scroll",
+            () => {
+                let current = "";
+                sections.forEach((sec) => {
+                    const top = sec.offsetTop - 140;
+                    if (window.scrollY >= top) current = sec.id;
+                });
+                navLinks.forEach((a) => {
+                    a.classList.remove("active");
+                    if (a.getAttribute("href") === "#" + current) a.classList.add("active");
+                });
+            },
+            { passive: true }
+        );
+
+        /* CONTACT FORM (client-side confirmation only) */
+        const leadForm = document.getElementById("leadForm");
+        if (leadForm) {
+            leadForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                alert("Thanks! Message received. We’ll reply within 24 hours.");
+                leadForm.reset();
+            });
+        }
+
+        /* ✅ FORCE choose-plan redirect to shop with correct plan */
+        document.querySelectorAll('.price-btn[data-plan]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const plan = btn.dataset.plan;
+                window.location.href = `./shop.html?plan=${plan}`;
+            });
+        });
+    </script>
 </body>
 
 </html>

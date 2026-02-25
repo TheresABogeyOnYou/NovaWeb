@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Cuts Barber</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter
+        }
+
+        body {
+            background: #05060a;
+            color: #fff
+        }
+
+        section {
+            padding: 100px 20px
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto
+        }
+
+        h1 {
+            font-size: 60px
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #4f7cff, #7b5cff);
+            padding: 15px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: #ffffff08;
+            padding: 40px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section>
+        <div class="container">
+            <h1>Elite Cuts Barber</h1>
+            <p>Modern grooming for modern gentlemen.</p>
+            <a href="barber-booking.html" class="btn">Book Appointment</a>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Services</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Skin Fade</h3>
+                    <p>Precision fade styling.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Beard Trim</h3>
+                    <p>Sharp professional shaping.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Full Service</h3>
+                    <p>Haircut + Beard + Styling.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>Gallery</h2>
+            <img width="100%" style="border-radius:20px"
+                src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1600">
+        </div>
+    </section>
+
+</body>
+
+</html>

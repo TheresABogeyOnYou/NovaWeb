@@ -7,14 +7,51 @@
     <title>NovaWeb Shop</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
         body {
             background: #05060a;
             color: white;
-            font-family: 'Inter', sans-serif;
             margin: 0;
             scroll-behavior: smooth;
-            /* smooth scrolling */
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 10%, #ffffff05, transparent 40%);
+            pointer-events: none;
+        }
+
+        /* ===== LIQUID BACKGROUND ===== */
+        .bg {
+            position: fixed;
+            width: 1200px;
+            height: 1200px;
+            background: radial-gradient(circle, #4f7cff30, transparent 60%);
+            filter: blur(160px);
+            top: -300px;
+            right: -300px;
+            z-index: -1;
+            animation: float 18s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-120px, 80px);
+            }
         }
 
         header {
@@ -25,6 +62,7 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, .05);
             z-index: 999;
+            transition: .4s;
         }
 
         .nav {
@@ -34,57 +72,197 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
+        }
+
+        .nav h2 {
+            margin: 0;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+
+        .nav nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         nav a {
-            margin-left: 30px;
             text-decoration: none;
             color: white;
             opacity: .8;
             transition: .3s;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0%;
+            height: 1px;
+            background: #fff;
+            transition: .3s;
+            opacity: .8;
         }
 
         nav a:hover {
             opacity: 1;
         }
 
+        nav a:hover::after {
+            width: 100%;
+        }
+
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
-            padding: 200px 20px 60px 20px;
-            /* avoid header overlap */
+            padding: 200px 20px 70px 20px;
             text-align: center;
         }
 
         h2 {
-            margin-bottom: 40px;
+            margin-bottom: 14px;
             font-size: 42px;
+            letter-spacing: -1px;
+        }
+
+        .sub {
+            color: #aaa;
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin: 28px auto 26px;
+        }
+
+        .plan {
+            padding: 22px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .08);
+            text-align: left;
+            transition: .35s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, .55), 0 0 35px rgba(79, 124, 255, .12);
+        }
+
+        .plan.selected {
+            border-color: rgba(79, 124, 255, .55);
+            box-shadow: 0 0 0 6px rgba(79, 124, 255, .10);
+        }
+
+        .plan h3 {
+            margin: 0 0 8px;
+            font-size: 18px;
+        }
+
+        .plan .price {
+            font-size: 34px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .pill {
+            margin-top: 12px;
+            display: inline-block;
+            font-size: 12px;
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(255, 255, 255, .08);
+            color: #ddd;
+            opacity: .9;
+        }
+
+        .checkout-box {
+            max-width: 720px;
+            margin: 0 auto 28px;
+            padding: 22px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .08);
+            text-align: left;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        #plan-price {
+            margin-top: 10px;
+            color: #aaa;
+            font-size: 16px;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            margin-top: 30px;
+            gap: 16px;
+            margin-top: 18px;
         }
 
         input,
         button {
-            padding: 12px;
-            border-radius: 8px;
-            border: none;
+            padding: 14px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .10);
             font-size: 16px;
+            background: rgba(255, 255, 255, .03);
+            color: #fff;
+            outline: none;
+            transition: .3s;
+        }
+
+        input:focus {
+            border-color: rgba(79, 124, 255, .55);
+            box-shadow: 0 0 0 6px rgba(79, 124, 255, .12);
+        }
+
+        #card-element {
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, .10);
+            background: rgba(255, 255, 255, .03);
         }
 
         button {
             background: linear-gradient(90deg, #4f7cff, #7b5cff);
-            color: white;
+            border: none;
             cursor: pointer;
+            font-weight: 700;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(79, 124, 255, .25);
+        }
+
+        button:active {
+            transform: scale(.98);
         }
 
         #payment-message {
-            margin-top: 20px;
-            font-weight: bold;
+            margin-top: 18px;
+            font-weight: 700;
         }
 
         footer {
@@ -92,56 +270,133 @@
             padding: 60px 20px;
             color: #777;
         }
+
+        @media(max-width:900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width:1100px) {
+            .nav {
+                padding: 16px 18px;
+            }
+
+            .nav nav {
+                gap: 12px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="bg"></div>
 
     <header>
         <div class="nav">
             <h2>NovaWeb</h2>
             <nav>
-                <a href="index.html">Home</a>
-                <a href="index.html#services">Services</a>
-                <a href="index.html#about">About</a>
-                <a href="index.html#pricing">Pricing</a>
+                <a href="./index.html">Home</a>
+                <a href="./index.html#services">Services</a>
+                <a href="./index.html#about">About</a>
+                <a href="./index.html#pricing">Pricing</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
-        <h2 id="plan-title">Complete Your Purchase</h2>
-        <p id="plan-price" style="color:#aaa;"></p>
+        <h2 id="plan-title">Choose Your Plan</h2>
+        <p class="sub">Select a package below — your checkout will update automatically.</p>
 
-        <form id="payment-form">
-            <input type="text" id="name" placeholder="Full Name" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <div id="card-element"><!-- Stripe injects card input here --></div>
-            <button type="submit">Pay Now</button>
-        </form>
+        <!-- PLAN PICKER -->
+        <div class="grid" id="planGrid">
+            <div class="plan" data-plan="starter">
+                <h3>Starter</h3>
+                <p class="price">£100</p>
+                <span class="pill">Fast Launch</span>
+            </div>
 
-        <div id="payment-message"></div>
+            <div class="plan" data-plan="professional">
+                <h3>Professional</h3>
+                <p class="price">£300</p>
+                <span class="pill">Conversion Focused</span>
+            </div>
+
+            <div class="plan" data-plan="elite">
+                <h3>Elite</h3>
+                <p class="price">£800</p>
+                <span class="pill">Agency Level</span>
+            </div>
+        </div>
+
+        <!-- CHECKOUT -->
+        <div class="checkout-box">
+            <div class="row">
+                <div class="pill" id="plan-pill">Plan: Starter</div>
+                <div class="pill">Secure Checkout</div>
+            </div>
+            <div id="plan-price">Price: £100</div>
+
+            <form id="payment-form">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <div id="card-element"><!-- Stripe injects card input here --></div>
+                <button type="submit">Pay Now</button>
+            </form>
+
+            <div id="payment-message"></div>
+        </div>
     </div>
 
-    <footer>
-        © 2026 NovaWeb — Built for performance
-    </footer>
+    <footer>© 2026 NovaWeb — Built for performance</footer>
 
     <!-- Stripe JS -->
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        // 1️⃣ Detect plan from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const plan = urlParams.get('plan') || 'starter';
+        // PLAN DATA
         const planInfo = {
             starter: { name: 'Starter', price: '£100' },
             professional: { name: 'Professional', price: '£300' },
             elite: { name: 'Elite', price: '£800' }
         };
-        document.getElementById('plan-title').textContent = 'Complete Your Purchase: ' + planInfo[plan].name;
-        document.getElementById('plan-price').textContent = 'Price: ' + planInfo[plan].price;
 
-        // 2️⃣ Stripe Elements setup
+        // read plan from url safely
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlPlan = (urlParams.get('plan') || 'starter').toLowerCase();
+        let selectedPlan = planInfo[urlPlan] ? urlPlan : 'starter';
+        setPlan(selectedPlan);
+
+        // update UI + URL (so refresh keeps selection)
+        function setPlan(plan) {
+            selectedPlan = plan;
+
+            document.getElementById('plan-title').textContent = 'Choose Your Plan: ' + planInfo[plan].name;
+            document.getElementById('plan-pill').textContent = 'Plan: ' + planInfo[plan].name;
+            document.getElementById('plan-price').textContent = 'Price: ' + planInfo[plan].price;
+
+            // highlight selected card
+            document.querySelectorAll('.plan').forEach(p => p.classList.remove('selected'));
+            const active = document.querySelector(`.plan[data-plan="${plan}"]`);
+            if (active) active.classList.add('selected');
+
+            // update URL without reload
+            const newUrl = `${window.location.pathname}?plan=${plan}`;
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        // click handlers
+        document.querySelectorAll('.plan').forEach(card => {
+            card.addEventListener('click', () => setPlan(card.dataset.plan));
+        });
+
+        // init selection
+        setPlan(selectedPlan);
+
+        // STRIPE SETUP
         const stripe = Stripe('pk_test_XXXX'); // <-- replace with your Stripe key
         const elements = stripe.elements();
         const card = elements.create('card', {
@@ -160,15 +415,19 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            message.textContent = "";
 
             try {
                 const response = await fetch('/create-payment-intent', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ plan })
+                    body: JSON.stringify({ plan: selectedPlan })
                 });
 
+                if (!response.ok) throw new Error("Server error creating payment intent.");
+
                 const data = await response.json();
+                if (!data.clientSecret) throw new Error("Missing clientSecret from server response.");
 
                 const result = await stripe.confirmCardPayment(data.clientSecret, {
                     payment_method: {
@@ -183,9 +442,13 @@
                 if (result.error) {
                     message.style.color = 'red';
                     message.textContent = "Payment failed: " + result.error.message;
-                } else if (result.paymentIntent.status === 'succeeded') {
+                } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
                     message.style.color = 'green';
                     message.textContent = "Payment successful! Thank you.";
+                    form.reset();
+                } else {
+                    message.style.color = 'red';
+                    message.textContent = "Payment could not be completed. Please try again.";
                 }
 
             } catch (err) {
@@ -194,27 +457,11 @@
             }
         });
 
-        // 3️⃣ Fix cross-page hash navigation for index.html
-        const hashLinks = document.querySelectorAll('nav a[href*="#"]');
-        hashLinks.forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault();
-                window.location.href = link.getAttribute('href');
-            });
-        });
-
-        // 4️⃣ Smooth scroll on page load if redirected with a hash
-        window.addEventListener('load', () => {
-            const hash = window.location.hash;
-            if (hash) {
-                const target = document.querySelector(hash);
-                if (target) {
-                    setTimeout(() => {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 50);
-                }
-            }
-        });
+        // NAV GLASS
+        const header = document.querySelector("header");
+        window.addEventListener("scroll", () => {
+            header.style.background = scrollY > 60 ? "rgba(5,6,10,.9)" : "rgba(5,6,10,.6)";
+        }, { passive: true });
     </script>
 
 </body>
