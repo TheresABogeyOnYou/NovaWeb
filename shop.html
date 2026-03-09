@@ -142,7 +142,7 @@
         document.getElementById('plan-price').textContent = 'Price: ' + planInfo[plan].price;
 
         // 2️⃣ Stripe Elements setup
-        const stripe = Stripe('YOUR_PUBLISHABLE_KEY'); // <-- replace with your Stripe key
+        const stripe = Stripe('pk_test_XXXX'); // <-- replace with your Stripe key
         const elements = stripe.elements();
         const card = elements.create('card', {
             style: {

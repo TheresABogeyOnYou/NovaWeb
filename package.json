@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/TheresABogeyOnYou/NovaWeb/issues"
   },
-  "homepage": "https://github.com/TheresABogeyOnYou/NovaWeb#readme"
+  "homepage": "https://github.com/TheresABogeyOnYou/NovaWeb#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1"
+  }
 }
